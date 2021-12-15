@@ -4,7 +4,7 @@ public class LanciaApplicazione {
 public static void main(String[] args) {
 	Atm atm1 = new Atm();
 	
-	Utente utente1 = new Utente();
+	Utente utente1 = new Utente("Emanuele", "Cerilli");
 	
 	utente1.apriConto(atm1, "4444444444", "22222", 2000);
 	
@@ -18,11 +18,14 @@ public static void main(String[] args) {
 	System.out.println("--------------------------------------------------");
 	utente1.accediSaldo(atm1, "4444444444", "22222");
 	
-	Utente utente2 = new Utente();
+	Utente utente2 = new Utente("Mario", "Biondi");
 	utente2.apriConto(atm1, "2222222222", "11111", 40000);
 	
 	utente2.accediSaldo(atm1, "2222222222",  "66666");
 	utente2.accediSaldo(atm1, "2222222222", "11111");
+	
+	
+	
 	
 	
 }

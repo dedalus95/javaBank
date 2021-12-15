@@ -5,11 +5,15 @@ public class Conto {
 	private String passwordValida;
 	private String numeroCarta;
 	private int saldo;
+	private String nomeUtente;
+	private String cognomeUtente;
 	
-	public Conto(String passwordValida, int saldo, String numeroCarta) {
+	public Conto(Utente utente, String passwordValida, int saldo, String numeroCarta) {
 		this.numeroCarta = numeroCarta;
 		this.passwordValida = passwordValida;
 		this.saldo = saldo;
+		nomeUtente = utente.getName();
+		cognomeUtente = utente.getSurname();
 	}
 
 	public String getPasswordValida() {
@@ -36,11 +40,16 @@ public class Conto {
 		this.numeroCarta = numeroCarta;
 	}
 	
+	private String getNomeUtente() {
+		
+		return "Egregio/a " + nomeUtente + " " + cognomeUtente;
+	}
+	
 	public void prelevaDenaro(int denaro, String ricevuta) {
 		this.saldo -= denaro;
 		if(ricevuta.toUpperCase().equals("yes".toUpperCase())) {
 			Date date = new Date();
-			System.out.println("Hai prelevato " + denaro + " € in data " + date + ".");
+			System.out.println(getNomeUtente() + ": ha prelevato " + denaro + " € in data " + date + ".");
 		}
 	}
 	
@@ -50,12 +59,14 @@ public class Conto {
 		this.saldo += denaro;
 		if(ricevuta.toUpperCase().equals("yes".toUpperCase())) {
 			Date date = new Date();
-			System.out.println("Hai versato " + denaro + " € in data " + date + ".");
+			System.out.println(getNomeUtente() + ": ha versato " + denaro + " € in data " + date + ".");
 		}
 	}
 	
 	public void stampaSaldo() {
-		System.out.println("Il tuo saldo è di " + getSaldo() + " €.");
+		System.out.println(getNomeUtente() + ": il suo saldo è di " + getSaldo() + " €.");
 	}
+	
+
 	
 }
