@@ -17,10 +17,10 @@ public class Conto {
 		private String cognomeUtente;
 		private int numeroMovimenti;
 	
-	public Conto(String nome, String cognome, int saldo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-		this.numeroCC = generateInt();
+	public Conto(String nome, String cognome, int saldo, SistemaBancario sistemaBancario) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+		this.numeroCC = generateInt(sistemaBancario);
 		this.passwordUtente = generateUserPassword();
-		this.passwordCriptata = comparePassword(passwordUtente);
+		this.passwordCriptata = encryptPassword(passwordUtente);
 		this.saldo = saldo;
 		this.listaMovimenti = new Vector<Movimento>();
 		this.numeroMovimenti = listaMovimenti.size();
@@ -118,17 +118,28 @@ public class Conto {
 
 
 
-	private int generateInt() {
-		return (int) Math.ceil(Math.random() * 1_000_000_000);
+	private int generateInt(SistemaBancario sistemaBancario) {
+		
+		int numeroCC = (int) Math.ceil(Math.random() * 1_000_000_000);
+		
+		if (sistemaBancario.ricercaConti(numeroCC) != null) {
+			generateInt(sistemaBancario);
+		} 
+		 
+		return numeroCC;
 	}
 	
+	
+	
+
+
 	private int generateUserPassword() {
 		return (int) Math.ceil(Math.random() * 1_000_000);
 
 	}
 	
 
-	public String comparePassword(int password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+	public String encryptPassword(int password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
 		return createPassword(password);
 	}
@@ -139,7 +150,7 @@ public class Conto {
 		
 		System.out.println("PREGO, INSERIRE PASSWORD.");
 		int password = tastiera.nextInt();
-		if (this.passwordCriptata.equals(comparePassword(password))) {
+		if (this.passwordCriptata.equals(encryptPassword(password))) {
 			return true;
 		} 
 		System.err.println("Password non valida.");
@@ -149,12 +160,16 @@ public class Conto {
 	
 
 	public String createPassword(int password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+				
 		String myString = "" + password;
 		byte[] bytesOfMessage = myString.getBytes("UTF-8");
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] theMD5Digest = md.digest(bytesOfMessage);
 		BigInteger bi = new BigInteger(1, theMD5Digest);
 		return String.format("%0" + (theMD5Digest.length << 1) + "X", bi);
+		
+		//sostituisci con digest.utils
+		
 		 
 	}
 	

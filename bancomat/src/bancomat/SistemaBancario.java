@@ -25,13 +25,12 @@ public class SistemaBancario {
 		}
 
 
-		private Conto ricercaConti(int numeroConto) {
+		protected Conto ricercaConti(int numeroConto) {
 			for (int i = 0; i < listaConti.size(); i++) {
 				if (listaConti.get(i).getNumeroCC() == numeroConto) {
 					return listaConti.get(i);
 				}
 			}
-			System.err.println("Conto corrente non trovato.");
 			return null;
 		}
 	
@@ -71,23 +70,33 @@ public class SistemaBancario {
 		
 		
 		private Conto inserisciNumeroConto(Scanner tastiera) {
+			
 			System.out.println("Inserisca il numero del suo conto");
 			int numeroConto = tastiera.nextInt();
+			
 			Conto contoTrovato = this.ricercaConti(numeroConto);
 			return contoTrovato;
 		}
 		
 		
+		
+		
 		private void inserisciCausaleEImporto(Scanner tastiera, Conto contoTrovato, int key) {
 			
 			if(contoTrovato != null) {
+				
 			System.out.println("Inserisca la causale.");
 			String causale = tastiera.next();
+			
 			System.out.println("Inserisca l'importo");
 			int importo = tastiera.nextInt();
+			
 			contoTrovato.muoviDenaro(causale, importo, key);
+			
 			} else {
+				
 				System.err.println("Conto non trovato.");
+				
 			}
 		}
 		
@@ -123,6 +132,7 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 				
 				// UN PO' LUNGHETTO, MA NON SONO RIUSCITO A FARE DI MEGLIO. I SYSOUTPRINT 
 				// SONO TUTTI NECESSARI.
+				
 				case 1: 
 					System.out.println("Inserisca il suo nome");
 					String nome = tastiera.next();
@@ -130,7 +140,7 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 					String cognome = tastiera.next();
 					System.out.println("Inserisca il suo saldo iniziale");
 					int saldo = tastiera.nextInt();
-					Conto nuovoConto = new Conto(nome, cognome, saldo);
+					Conto nuovoConto = new Conto(nome, cognome, saldo, sistemaBancario);
 					sistemaBancario.listaConti.add(nuovoConto);
 					Movimento nuovoMovimento = new Movimento("Inizializzazione conto", saldo, "Deposito");
 					nuovoConto.getListaMovimenti().add(nuovoMovimento);
@@ -139,15 +149,19 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 
 					break;
 					
+					
+					
 		
 					// DEPOSITA DENARO
 					
 					// SFRUTTA LO STESSO METODO DEL CASO 3, 
 					// MA HA COME PARAM IN INGRESSO IL DIVERSO VALORE DI KEY
+					
 				case 2:	
 					Conto contoTrovato = sistemaBancario.inserisciNumeroConto(tastiera);
 					
 					if(contoTrovato == null) {
+						System.err.println("Conto corrente non trovato.");
 						break;
 					} 
 				
@@ -155,6 +169,8 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 					sistemaBancario.inserisciCausaleEImporto(tastiera, contoTrovato, key);
 					}
 					break;
+					
+					
 					
 				
 					// PRELEVA
@@ -165,6 +181,7 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 					Conto contoTrovato1 = sistemaBancario.inserisciNumeroConto(tastiera);	
 					
 					if(contoTrovato1 == null) {
+						System.err.println("Conto corrente non trovato.");
 						break;
 					} 
 					
@@ -174,12 +191,15 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 					break;
 					
 					
+					
+					
 					// STAMPA IL SALDO
 					
 				case 4: 
 					Conto contoTrovato2 = sistemaBancario.inserisciNumeroConto(tastiera);
 					
 					if(contoTrovato2 == null) {
+						System.err.println("Conto corrente non trovato.");
 						break;
 					} 
 						if (contoTrovato2.requestPassword(tastiera)) {
@@ -187,12 +207,16 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 							}
 					break;
 					
+					
+					
+					
 					//STAMPA TUTTI I MOVIMENTI
 					
 				case 5: 
 					Conto contoTrovato3 = sistemaBancario.inserisciNumeroConto(tastiera);
 					
 					if(contoTrovato3 == null) {
+						System.err.println("Conto corrente non trovato.");
 						break;
 					} 
 						if(contoTrovato3.requestPassword(tastiera)) {
@@ -200,14 +224,16 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 					}
 					break;
 					
+					
+					
+					
 					//FILTRA I MOVIMENTI IN BASE ALL'INPUT String DENOMINATO scelta
-					
-					
 			
 				case 6: 
 					Conto contoTrovato4 = sistemaBancario.inserisciNumeroConto(tastiera);
 				
 					if(contoTrovato4 == null) {
+						System.err.println("Conto corrente non trovato.");
 						break;
 					} 
 					
