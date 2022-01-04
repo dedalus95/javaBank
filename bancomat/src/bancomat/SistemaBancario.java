@@ -119,7 +119,7 @@ public static void main(String[] args) throws UnsupportedEncodingException, NoSu
 				
 				System.out.println("PREMI 0 PER USCIRE") ;
 				System.out.println("PREMI 1 PER APRIRE UN NUOVO CONTO");
-				System.out.println( "PREMI 2 PER VERSARE DEL DANARO" );
+				System.out.println("PREMI 2 PER VERSARE DEL DANARO" );
 				System.out.println("PREMI 3 PER RITIRARE DEL DANARO");
 				System.out.println("PREMI 4 PER OTTENERE IL SALDO");
 				System.out.println("PREMI 5 PER STAMPARE LA LISTA MOVIMENTI COMPLETA");
